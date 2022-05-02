@@ -1,0 +1,119 @@
+from abc import ABC, abstractmethod
+
+# main class "Report" to be inherited from
+# we are supplying "ABC" as a parameter
+# which is imported as an "abstractmethod" above
+class Report(ABC):
+    @abstractmethod
+    def call_internal(self):
+        pass
+    
+    @abstractmethod
+    def call_external(self):
+        pass
+    
+# two abstract classes to call upon (internal/external)
+
+class Internal(ABC):
+    @abstractmethod
+    def creating_internal(self):
+        pass
+    
+class External(ABC):
+    @abstractmethod
+    def creating_external(self):
+        pass
+ 
+# this salary report is internal to agency/staff, 
+#so we can display social securutiy number (SSN) to our internal staff
+class Salary(Report):
+    def call_internal(self):
+        return Salary_SSN()
+        
+    # also, in this class we can hide/exclude the social security number from this
+    # salary report since a external user can view this report
+    def call_external(self):
+        return Salary_Exclude_SSN()
+        
+# this profile report is internal, so we can display the residence on this report        
+class Profile(Report):
+    def call_internal(self):
+        return Profile_Residence()
+    
+    # also, in this call we can hide/exclude the users residence since this report
+    # can be called by external users outside the agency
+    def call_external(self):
+        return Profile_Exclude_Residence()
+
+# in this class we are creating an internal method that 
+# returns Salary SSN to internal agency/staff only
+class Salary_SSN(Internal):
+    def creating_internal(self):
+        print('Created all employees salary report for internal use only (warning: includes SSN)')
+
+# in this class we are creating an external method that 
+# returns Salary info but excludes the Social Security Number (SSN) to external users 
+class Salary_Exclude_SSN(External):
+    def creating_external(self):
+        print('Created an external employees salary listing without SSN')
+        
+# in this class we are creating an internal method that 
+# returns the Users Residence to internal agency/staff only
+class Profile_Residence(Internal):
+    def creating_internal(self):
+        print('Created all employees residence listing for internal use only')
+        
+# in this class we are creating an external method that 
+# returns the Users Profile but hides/excludes the users Residence to external users
+class Profile_Exclude_Residence(External):
+    def creating_external(self):
+        print('Created all employees listing without residence for external use')
+        
+        
+# create factory order for the internal report        
+def clientInternal(order):
+    internal = order.call_internal()
+    internal.creating_internal()
+
+# create factory order for the external report       
+def clientExternal(order):
+    external = order.call_external()
+    external.creating_external()
+    
+# make calls to internal and exteral data while passing in desired method    
+clientInternal(Salary())
+clientExternal(Salary())
+
+clientInternal(Profile())
+clientExternal(Profile())
+
+
+# output
+Created all employees salary report for internal use only (warning: includes SSN)
+Created an external employees salary listing without SSN
+Created all employees residence listing for internal use only
+Created all employees listing without residence for external use
+    
+
+
+        
+        
+    
+    
+        
+
+
+
+    
+
+    
+    
+    
+    
+    
+    
+
+
+
+    
+    
