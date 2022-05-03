@@ -1,0 +1,63 @@
+from abc import ABC, abstractmethod
+
+class Door(ABC):
+    def call_wooden(self):
+        pass
+    
+    def call_iron(self):
+        pass
+
+class Wooden(ABC):
+    def creating_wooden(self):
+        pass
+    
+class Iron(ABC):
+    def creating_iron(self):
+        pass
+
+class HomeDepot(Door):
+    def call_wooden(self):
+        return HomeDepotDoor()
+        
+    def call_iron(self):
+        return HomeDepotSteelDoor()
+        
+class Lowes(Door):
+    def call_wooden(self):
+        return LowesWoodenDoor()
+        
+    def call_iron(self):
+        return LowesSteelDoor()
+        
+        
+class HomeDepotDoor(Wooden):
+    def creating_wooden(self):
+        print('Creating a new wooden door purchased from Home Depot')
+        
+class HomeDepotSteelDoor(Iron):
+    def creating_iron(self):
+        print('Creating a new iron door purchased from Home Depot')
+        
+class LowesWoodenDoor(Wooden):
+    def creating_wooden(self):
+        print('Creating a new wooden door from Lowes Home Improvement')
+        
+class LowesSteelDoor(Iron):
+    def creating_iron(self):
+        print('Creating a new iron door from Lowes Home Improvement')
+
+        
+def clientWooden(order):
+    wooden = order.call_wooden()
+    wooden.creating_wooden()
+    
+def clientIron(order):
+    iron = order.call_iron()
+    iron.creating_iron()
+    
+    
+clientWooden(HomeDepot())
+clientIron(HomeDepot())
+clientWooden(Lowes())
+clientIron(Lowes())
+
