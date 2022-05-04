@@ -1,0 +1,70 @@
+from abc import ABC, abstractmethod
+
+# define an abtract report/listing
+class Report(ABC):
+    @abstractmethod
+    def call_internal(self):
+        pass
+    
+    @abstractmethod
+    def call_external(self):
+        pass
+    
+class Internal(ABC):
+    @abstractmethod
+    def creating_internal(self):
+        pass
+
+class External(ABC):
+    @abstractmethod
+    def creating_external(self):
+        pass
+    
+
+class HumanResources(Report):
+    def call_internal(self):
+        return Pay()
+        
+    def call_external(self):
+        return BusPhone()
+        
+class EmployeesRetirementSystem(Report):
+    def call_internal(self):
+        return Investments()
+        
+    def call_external(self):
+        return YearsOfService()
+        
+        
+class Investments(Internal):
+    def creating_internal(self):
+        print('Creating documents containing your investments for internal use only.')
+        
+class YearsOfService(External):
+    def creating_external(self):
+        print('Creating years of state service listing for external use.')
+
+class Pay(Internal):
+    def creating_internal(self):
+        print('Creating a pay statement for internal use only.')
+
+class BusPhone(External):
+    def creating_external(self):
+        print('Creating a business phone listing for external use.')
+        
+def clientInternal(order):
+    hr = order.call_internal()
+    hr.creating_internal()
+    
+def clientExternal(order):
+    ers = order.call_external()
+    ers.creating_external()
+    
+    
+clientInternal(HumanResources())    
+clientExternal(HumanResources())
+
+clientInternal(EmployeesRetirementSystem())
+clientExternal(EmployeesRetirementSystem())
+        
+    
